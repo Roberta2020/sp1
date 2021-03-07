@@ -13,5 +13,11 @@ Thanks for checking out my first PHP task - File Browser !
 - create new directories
 - go back and into the directories
 
+## Instructions for use:
+
+  - username: Roberta
+  - password = 1234
+
 ## Author
+
 [Roberta](https://github.com/Roberta2020)

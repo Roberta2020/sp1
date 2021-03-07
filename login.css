@@ -1,0 +1,31 @@
+.login-card {
+    display: grid;
+    grid-template-rows: 40px 30px 30px 30px 30px 40px;
+    row-gap: 10px;
+    width: 200px;
+    margin-left: 40px;
+    background-color: cadetblue;
+    padding: 20px;
+}
+
+.login-card > h3 {
+    grid-row: 1/2;
+    text-align: center;
+}
+
+.username {
+    grid-row: 2/3;
+}
+
+.password {
+    grid-row: 3/4;
+}
+
+.login-button {
+    grid-row: 4/5;
+} 
+.login-card > h4 {
+    grid-row: 5/6;
+    text-align: center;
+
+}

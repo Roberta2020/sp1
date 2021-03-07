@@ -1,0 +1,57 @@
+
+h2 {
+display: inline-block;
+margin-left: 40%;
+margin-top: 30px;
+}
+table {
+    width: 60%;
+    padding: 50px;
+    margin-left: 20%;
+}
+
+th {
+    background-color: cadetblue;
+}
+tr {
+  background-color: antiquewhite;
+}
+
+.back {
+    display: inline-block;
+    margin-left: 70%;
+    border-color: darkcyan;
+    background-color: antiquewhite;
+    width: 80px;
+    font-size: 14px;
+}
+
+.upload {
+    box-sizing: border-box;
+    width: 30%;
+    height: 50px;
+    background-color: antiquewhite;
+    border: solid darkcyan 2px;
+    margin-top: 60px;   
+    margin-left: 20%; 
+}
+
+.new-dir {
+    box-sizing: border-box;
+    width: 30%;
+    height: 50px;
+    background-color: antiquewhite;
+    border: solid darkcyan 2px;
+    margin-top: 60px; 
+    margin-left: 20%; 
+}
+
+.logout {
+    display: inline-block;
+    float: right;
+    margin-right: 20%;
+    height: 20px;
+    background-color: antiquewhite;
+    border: solid darkcyan 2px;
+}
+

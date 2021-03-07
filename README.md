@@ -1,0 +1,17 @@
+# FileBrowser
+
+## Welcome! 👋
+
+Thanks for checking out my first PHP task - File Browser !
+
+## About the File Browser features
+
+- login & logout
+- upload files
+- download files
+- delete files 
+- create new directories
+- go back and into the directories
+
+## Author
+[Roberta](https://github.com/Roberta2020)

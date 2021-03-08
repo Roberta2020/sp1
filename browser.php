@@ -25,6 +25,8 @@
 </head>
 <body>
 <?php
+ $current = $_SERVER['REQUEST_URI'];
+
     if(isset($_FILES['image'])){
         $errors= array();
         $file_name = $_FILES['image']['name'];
@@ -41,20 +43,18 @@
             $errors[]='File size must be smaller than 2 MB';
         }
         if(empty($errors)==true) {
-            move_uploaded_file($file_tmp,"./".$file_name);
+            move_uploaded_file($file_tmp, $file_name);
             echo "Success";
         }else{
             print_r($errors);
         }
     }
-?>
 
-<!------------------- Download files -->
-<?php
+// <!------------------- Download files -->
+
       // FILE DOWNLOAD LOGIC
       if(isset($_POST['download'])){
-        print('Path to download: ' . "." . $_GET["path"] . $_POST['download']);
-        $file='./' . $_GET["path"] . $_POST['download'];
+        $file='./' . $_POST['download'];
         $fileToDownloadEscaped = str_replace("&nbsp;", " ", htmlentities($file, null, 'utf-8'));
         ob_clean();
         ob_start();
@@ -70,26 +70,30 @@
         readfile($fileToDownloadEscaped);
         exit;
     }
-?>
-<?php
-// DELETE FILE 
-    if (isset($_POST['delete'])){
-        $filePath = $_GET['path'] . $_POST['delete'];
-        @unlink($filePath);
+// NAVIGATE 
+    if (isset($_GET["dir"]) && !empty($_GET['dir'])) {
+      $_SESSION['path'] = $_GET['dir'];
+    } else {
+      $_SESSION['path'] = '';
+      $root = $_SERVER['REQUEST_URI'];
+      $root = preg_replace('/\?.*/', '', $root);
+      $_SESSION['root_dir'] = $root;
     }
-?>
-<?php
-// ISSET PATH 
-if (isset($_GET['path']))
-{
-    $path = $_GET['path'];
-}  else {
-        $path = '.';
-   }
-?>
 
-<?php
-
+// DELETE FILE 
+if(isset($_POST['delete'])) {
+    $filePath = $_GET['path'] . '/' . $_POST['delete'];
+    if ($filePath == 'index.php' || 
+        $filePath == 'browser.php' ||
+        $filePath == 'browser.css' ||
+        $filePath == 'login.css' ||
+        $filePath == "README.md") {
+        echo '<p style="color: red;">You cannot delete this file! Please delete something that is not important</p>';
+    } else {
+        unlink($filePath);
+        header('Location: ' . $_SERVER['REQUEST_URI']);
+    }
+}
 // NEW DIR FUNCTION
     function createDir() {
         $add = $_POST["add"];
@@ -104,7 +108,7 @@ if (isset($_POST['submit'])){
 <?php
 $path = './' . $_GET["path"];
 $files_and_dirs = scandir($path);
-print('<h2>Current directory: ' . str_replace('?path=/','',$_SERVER['REQUEST_URI']) . '</h2>');
+print('<h2>Current directory: ' . substr($_SESSION['root_dir'], 0, -1) . $_SESSION['path'] . '</h2>');
 print("<table><th>Type</th><th>Name</th><th>Actions</th>");
 foreach ($files_and_dirs as $filesNdirs)
 {
@@ -121,8 +125,8 @@ foreach ($files_and_dirs as $filesNdirs)
             print("<td>" . "Files" . "</td>");
             print("<td>" . $filesNdirs . "</td>");
             print('<td>
-                <form style="display: inline-block" action="" method="post">
-                    <input type="hidden" name="delete" value="' . $fullPath . '">
+                <form style="display: inline-block" action="" method="POST">
+                    <input type="hidden" name="delete" value="' . $filesNdirs . '">
                     <input type="submit" value="Delete">
                 </form>
                 <form style="display: inline-block" action="?path=' . $fullPath . '" method="POST">
